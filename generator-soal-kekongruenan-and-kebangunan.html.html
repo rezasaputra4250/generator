@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+  <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Generator Soal Kekongruenan & Kebangunan</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+      // Fungsi untuk menghasilkan soal kekongruenan
+
+      function generateSoalKekongruenan() {
+
+        const A = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+
+        const B = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+
+        const C = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+
+        const A2 = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+
+        const B2 = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+
+        const C2 = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+
+
+        document.getElementById("soalKekongruenan").innerHTML = `Dua segitiga dengan titik-titik berikut:
+
+            <br>Segitiga 1: A(${A[0]}, ${A[1]}), B(${B[0]}, ${B[1]}), C(${C[0]}, ${C[1]})
+
+            <br>Segitiga 2: A'(${A2[0]}, ${A2[1]}), B'(${B2[0]}, ${B2[1]}), C'(${C2[0]}, ${C2[1]})
+
+            <br>Apakah kedua segitiga tersebut kongruen?`;
+
+
+        document.getElementById("jawabanKekongruenan").innerHTML = `Jawaban: 
+
+            <br>Periksa panjang sisi dan sudut segitiga. Jika panjang sisi dan sudutnya sama, maka kedua segitiga tersebut kongruen.`;
+
+      }
+
+
+      // Fungsi untuk menghasilkan soal kebangunan
+
+      function generateSoalKebangunan() {
+
+        const x = Math.floor(Math.random() * 10);
+
+        const y = Math.floor(Math.random() * 10);
+
+        const transformasi = Math.random() > 0.5 ? 'translasi' : 'refleksi';
+
+        const dx = Math.floor(Math.random() * 10);
+
+        const dy = Math.floor(Math.random() * 10);
+
+
+        document.getElementById("soalKebangunan").innerHTML = `Titik P(${x}, ${y}) diberikan. 
+
+            <br>Apa hasil dari ${transformasi} dengan vektor (${dx}, ${dy})?`;
+
+
+        if (transformasi === 'translasi') {
+
+          const xBaru = x + dx;
+
+          const yBaru = y + dy;
+
+          document.getElementById("jawabanKebangunan").innerHTML = `Jawaban: Titik baru setelah translasi adalah P'(${xBaru}, ${yBaru})`;
+
+        } else {
+
+          const xBaru = -x;
+
+          const yBaru = -y;
+
+          document.getElementById("jawabanKebangunan").innerHTML = `Jawaban: Titik baru setelah refleksi adalah P'(${xBaru}, ${yBaru})`;
+
+        }
+
+      }
+
+    </script>
+
+  </head>
+
+  <body class="bg-gray-100 p-10">
+
+    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+
+      <h1 class="text-2xl font-semibold text-center mb-6">Generator Soal Kekongruenan & Kebangunan</h1>
+
+
+
+      <!-- Bagian untuk soal kekongruenan -->
+
+      <div class="mb-8">
+
+        <h2 class="text-xl font-semibold mb-4">Soal Kekongruenan Segitiga</h2>
+
+        <button onclick="generateSoalKekongruenan()"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mb-4">Buat Soal Kekongruenan</button>
+
+        <div id="soalKekongruenan" class="text-xl text-center mb-4 font-medium text-gray-700"></div>
+
+        <button onclick="generateSoalKekongruenan()"
+          class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mb-4">Tampilkan Jawaban
+          Kekongruenan</button>
+
+        <div id="jawabanKekongruenan" class="text-xl text-center font-medium text-gray-700"></div>
+
+      </div>
+
+
+      <!-- Bagian untuk soal kebangunan -->
+
+      <div class="mb-8">
+
+        <h2 class="text-xl font-semibold mb-4">Soal Kebangunan Titik</h2>
+
+        <button onclick="generateSoalKebangunan()"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mb-4">Buat Soal Kebangunan</button>
+
+        <div id="soalKebangunan" class="text-xl text-center mb-4 font-medium text-gray-700"></div>
+
+        <button onclick="generateSoalKebangunan()"
+          class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mb-4">Tampilkan Jawaban
+          Kebangunan</button>
+
+        <div id="jawabanKebangunan" class="text-xl text-center font-medium text-gray-700"></div>
+
+      </div>
+
+
+    </div>
+
+  </body>
+
+</html>

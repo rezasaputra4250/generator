@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Persentase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+      <h1 class="text-xl font-bold text-center mb-4">Generator Soal Persentase</h1>
+      <div class="mb-4">
+        <p id="soal" class="text-lg text-center">Klik tombol di bawah untuk membuat soal!</p>
+      </div>
+      <div class="flex justify-between">
+        <button onclick="generateSoal()"
+          class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+        <input type="number" step="any" id="jawaban" class="border p-2 rounded" placeholder="Jawab">
+      </div>
+      <div class="mt-4">
+        <button onclick="checkJawaban()"
+          class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+      </div>
+      <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+      let num1, num2, persen, hasilSoal;
+
+      // Fungsi untuk menghasilkan soal persentase
+      function generateSoal() {
+        // Menentukan angka acak untuk soal
+        num1 = Math.floor(Math.random() * 100) + 1; // Angka acak antara 1 dan 100
+        num2 = Math.floor(Math.random() * 100) + 1; // Angka acak antara 1 dan 100
+        persen = Math.floor(Math.random() * 100) + 1; // Angka persentase antara 1 dan 100
+
+        // Menentukan soal (persentase dari angka atau perubahan persentase)
+        const operasi = Math.random() < 0.5 ? 'persen' : 'perubahan';
+
+        if (operasi === 'persen') {
+          // Soal: Mencari persentase dari num1
+          hasilSoal = (persen / 100) * num1;
+          document.getElementById("soal").innerText = `Berapa ${persen}% dari ${num1}?`;
+        } else {
+          // Soal: Menghitung perubahan persen antara num1 dan num2
+          let perubahan = ((num2 - num1) / num1) * 100;
+          hasilSoal = perubahan;
+          document.getElementById("soal").innerText = `Berapa persen perubahan dari ${num1} ke ${num2}?`;
+        }
+
+        document.getElementById("jawaban").value = ''; // Reset input jawaban
+        document.getElementById("hasil").innerText = ''; // Reset hasil
+      }
+
+      // Fungsi untuk memeriksa jawaban
+      function checkJawaban() {
+        const jawaban = parseFloat(document.getElementById("jawaban").value);
+        if (Math.abs(jawaban - hasilSoal) < 0.0001) {
+          document.getElementById("hasil").innerText = "Jawaban Benar!";
+          document.getElementById("hasil").classList.remove("text-red-500");
+          document.getElementById("hasil").classList.add("text-green-500");
+        } else {
+          document.getElementById("hasil").innerText = "Jawaban Salah!";
+          document.getElementById("hasil").classList.remove("text-green-500");
+          document.getElementById("hasil").classList.add("text-red-500");
+        }
+      }
+    </script>
+  </body>
+
+</html>

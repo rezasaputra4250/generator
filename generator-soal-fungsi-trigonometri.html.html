@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Fungsi Trigonometri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Fungsi Trigonometri</h1>
+        
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol untuk membuat soal!</p>
+        </div>
+
+        <div class="mb-4">
+            <p id="jenis_soal" class="text-center font-semibold text-lg">Soal:</p>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="text" id="jawaban" class="border p-2 rounded w-16" placeholder="Jawaban">
+        </div>
+
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let jawabanBenar, soalText;
+
+        // Fungsi untuk menghasilkan soal fungsi trigonometri
+        function generateSoal() {
+            // Pilih jenis soal acak (menggunakan fungsi trigonometri)
+            const tipeSoal = Math.random();
+
+            if (tipeSoal < 0.2) {
+                // Soal fungsi sinus: sin(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                soalText = `Hitung nilai sin(θ) jika θ = ${angle}°`;
+                jawabanBenar = Math.sin(angle * Math.PI / 180).toFixed(2); // Menghitung sin(θ) dalam radian
+            } else if (tipeSoal < 0.4) {
+                // Soal fungsi cosinus: cos(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                soalText = `Hitung nilai cos(θ) jika θ = ${angle}°`;
+                jawabanBenar = Math.cos(angle * Math.PI / 180).toFixed(2); // Menghitung cos(θ) dalam radian
+            } else if (tipeSoal < 0.6) {
+                // Soal fungsi tangen: tan(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                soalText = `Hitung nilai tan(θ) jika θ = ${angle}°`;
+                jawabanBenar = Math.tan(angle * Math.PI / 180).toFixed(2); // Menghitung tan(θ) dalam radian
+            } else if (tipeSoal < 0.8) {
+                // Soal fungsi kosekan: csc(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                soalText = `Hitung nilai csc(θ) jika θ = ${angle}°`;
+                jawabanBenar = (1 / Math.sin(angle * Math.PI / 180)).toFixed(2); // Menghitung csc(θ) = 1/sin(θ)
+            } else {
+                // Soal fungsi sekan: sec(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                soalText = `Hitung nilai sec(θ) jika θ = ${angle}°`;
+                jawabanBenar = (1 / Math.cos(angle * Math.PI / 180)).toFixed(2); // Menghitung sec(θ) = 1/cos(θ)
+            }
+
+            // Menampilkan soal dan reset jawaban
+            document.getElementById("soal").innerText = soalText;
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = parseFloat(document.getElementById("jawaban").value.trim());
+
+            // Memeriksa apakah jawaban yang dimasukkan benar
+            if (Math.abs(jawaban - jawabanBenar) < 0.01) { // dengan toleransi 0.01 untuk perhitungan trigonometri
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>

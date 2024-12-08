@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram Bidang & Lingkungan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <h1 class="text-2xl font-bold text-center mb-4">Diagram Bidang & Lingkungan</h1>
+        
+        <div class="flex justify-between mb-4">
+            <button onclick="drawDiagram()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Diagram</button>
+            <button onclick="drawLingkaran()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Gambar Lingkungan</button>
+        </div>
+        
+        <div class="relative w-full h-96 bg-white border border-gray-400 rounded-lg">
+            <canvas id="canvas" class="w-full h-full"></canvas>
+        </div>
+        
+        <p id="keterangan" class="mt-4 text-center text-lg">Klik tombol di atas untuk menggambar diagram atau lingkungan.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Fungsi untuk menggambar diagram bidang koordinat
+        function drawDiagram() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Menambahkan sumbu X dan Y
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+
+            // Menambahkan tanda di sumbu X dan Y
+            for (let i = -10; i <= 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2 + i * 30, canvas.height / 2 - 5);
+                ctx.lineTo(canvas.width / 2 + i * 30, canvas.height / 2 + 5);
+                ctx.moveTo(canvas.width / 2 - 5, canvas.height / 2 - i * 30);
+                ctx.lineTo(canvas.width / 2 + 5, canvas.height / 2 - i * 30);
+                ctx.stroke();
+            }
+
+            document.getElementById('keterangan').innerText = 'Diagram Bidang Koordinat X-Y telah digambar.';
+        }
+
+        // Fungsi untuk menggambar lingkungan (misalnya, lingkaran)
+        function drawLingkaran() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Menggambar lingkaran di tengah bidang dengan radius 50
+            const radius = 50;
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'rgba(0, 150, 136, 0.3)';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'green';
+            ctx.stroke();
+
+            // Menambahkan sumbu X dan Y
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+
+            document.getElementById('keterangan').innerText = 'Lingkungan (Lingkaran) telah digambar.';
+        }
+    </script>
+</body>
+</html>

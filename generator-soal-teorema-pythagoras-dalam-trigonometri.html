@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Teorema Pythagoras dalam Trigonometri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Teorema Pythagoras dalam Trigonometri</h1>
+        
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol untuk membuat soal!</p>
+        </div>
+
+        <div class="mb-4">
+            <p id="jenis_soal" class="text-center font-semibold text-lg">Soal:</p>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="number" id="jawaban" class="border p-2 rounded w-16" placeholder="Jawaban">
+        </div>
+
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let a, b, c, angle, jawabanBenar, soalText;
+
+        // Fungsi untuk menghasilkan soal trigonometri Teorema Pythagoras
+        function generateSoal() {
+            // Pilih jenis soal acak (menghitung sisi atau sudut)
+            const tipeSoal = Math.random();
+            
+            if (tipeSoal < 0.5) {
+                // Soal untuk menghitung panjang sisi
+                // Pilih sudut acak antara 30° dan 60°
+                angle = Math.floor(Math.random() * 31) + 30; // Sudut acak antara 30° dan 60°
+                
+                // Pilih sisi hipotenusa (c) acak antara 10 hingga 20
+                c = Math.floor(Math.random() * 11) + 10; // Hipotenusa antara 10 sampai 20
+                
+                // Pilih jenis sisi yang akan dihitung: lawan atau dekat
+                const tipeSisi = Math.random();
+                if (tipeSisi < 0.5) {
+                    // Menghitung sisi lawan menggunakan sin
+                    a = Math.floor(Math.random() * 10) + 1; // Sisi lawan (acakan antara 1 hingga 10)
+                    soalText = `Diketahui segitiga siku-siku dengan hipotenusa ${c} dan sudut ${angle}°. Hitung panjang sisi lawan (a).`;
+                    jawabanBenar = c * Math.sin(angle * Math.PI / 180); // Menggunakan rumus a = c * sin(θ)
+                } else {
+                    // Menghitung sisi dekat menggunakan cos
+                    b = Math.floor(Math.random() * 10) + 1; // Sisi dekat (acakan antara 1 hingga 10)
+                    soalText = `Diketahui segitiga siku-siku dengan hipotenusa ${c} dan sudut ${angle}°. Hitung panjang sisi dekat (b).`;
+                    jawabanBenar = c * Math.cos(angle * Math.PI / 180); // Menggunakan rumus b = c * cos(θ)
+                }
+            } else {
+                // Soal untuk menghitung sudut
+                // Pilih dua sisi segitiga: a dan b
+                a = Math.floor(Math.random() * 10) + 1; // Sisi a
+                b = Math.floor(Math.random() * 10) + 1; // Sisi b
+                soalText = `Diketahui segitiga siku-siku dengan sisi a = ${a} dan b = ${b}. Hitung sudut antara sisi a dan hipotenusa.`;
+                jawabanBenar = Math.atan(a / b) * 180 / Math.PI; // Menggunakan rumus θ = tan⁻¹(a / b)
+            }
+
+            // Menampilkan soal dan reset jawaban
+            document.getElementById("soal").innerText = soalText;
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = parseFloat(document.getElementById("jawaban").value.trim());
+
+            // Memeriksa apakah jawaban yang dimasukkan benar
+            if (Math.abs(jawaban - jawabanBenar) < 0.1) { // dengan toleransi 0.1 untuk perhitungan trigonometri
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>

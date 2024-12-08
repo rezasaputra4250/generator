@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Distribusi Probabilitas</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generator Soal Distribusi Probabilitas</h1>
+        
+        <button id="generateButton" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 mb-4">Generate Soal</button>
+
+        <div id="soalContainer" class="space-y-4">
+            <!-- Soal akan muncul di sini -->
+        </div>
+    </div>
+
+    <script>
+        // Daftar soal distribusi probabilitas
+        const soalList = [
+            { type: "Soal Distribusi Binomial", questions: [
+                "Sebuah percobaan binomial dilakukan dengan 10 percobaan, dan probabilitas sukses pada setiap percobaan adalah 0.5. Tentukan probabilitas tepat 6 sukses.",
+                "Dalam sebuah percobaan binomial dengan 8 percobaan, peluang sukses pada setiap percobaan adalah 0.3. Tentukan probabilitas tidak lebih dari 3 sukses.",
+                "Sebuah percobaan binomial memiliki 12 percobaan, dan probabilitas sukses pada setiap percobaan adalah 0.4. Hitung probabilitas lebih dari 5 sukses.",
+                "Dalam percobaan binomial dengan 15 percobaan, tentukan probabilitas memperoleh lebih dari 9 kegagalan.",
+                "Pada sebuah percobaan binomial dengan 20 percobaan dan probabilitas sukses 0.2, tentukan probabilitas tepat 4 sukses."
+            ]},
+            { type: "Soal Distribusi Poisson", questions: [
+                "Jika rata-rata jumlah kejadian dalam 1 jam adalah 3, tentukan probabilitas terjadinya tepat 4 kejadian dalam 1 jam.",
+                "Dalam distribusi Poisson, rata-rata kejadian dalam 5 menit adalah 2. Tentukan probabilitas terjadinya lebih dari 1 kejadian dalam 5 menit.",
+                "Jika rata-rata kecelakaan mobil di sebuah jalan raya adalah 4 per hari, tentukan probabilitas terjadinya lebih dari 2 kecelakaan dalam sehari.",
+                "Dalam distribusi Poisson dengan rata-rata 5 kejadian per bulan, tentukan probabilitas terjadinya kurang dari 3 kejadian dalam 1 bulan.",
+                "Dengan distribusi Poisson dan rata-rata 6 kejadian dalam 3 jam, tentukan probabilitas terjadinya tepat 5 kejadian dalam 3 jam."
+            ]},
+            { type: "Soal Distribusi Normal", questions: [
+                "Jika tinggi badan siswa di sebuah kelas terdistribusi normal dengan rata-rata 160 cm dan deviasi standar 8 cm, tentukan probabilitas seorang siswa memiliki tinggi lebih dari 170 cm.",
+                "Tinggi badan mahasiswa di universitas terdistribusi normal dengan rata-rata 175 cm dan deviasi standar 6 cm. Tentukan probabilitas seorang mahasiswa memiliki tinggi antara 170 cm dan 180 cm.",
+                "Sebuah distribusi normal memiliki rata-rata 50 dan deviasi standar 10. Tentukan probabilitas bahwa nilai acak yang dipilih lebih dari 55.",
+                "Dalam distribusi normal dengan rata-rata 80 dan deviasi standar 15, tentukan probabilitas bahwa nilai acak yang dipilih berada antara 70 dan 90.",
+                "Pada distribusi normal dengan rata-rata 100 dan deviasi standar 20, tentukan probabilitas seorang individu memiliki nilai kurang dari 90."
+            ]},
+            { type: "Soal Distribusi Uniform", questions: [
+                "Sebuah variabel acak terdistribusi uniform antara 0 dan 10. Tentukan probabilitas bahwa nilai yang dipilih lebih besar dari 7.",
+                "Jika distribusi uniform memiliki interval [5, 15], tentukan probabilitas bahwa nilai acak yang dipilih lebih kecil dari 8.",
+                "Sebuah variabel acak terdistribusi uniform antara 20 dan 50. Tentukan probabilitas bahwa nilai acak yang dipilih berada di antara 25 dan 40.",
+                "Dalam distribusi uniform dengan interval [0, 12], tentukan probabilitas bahwa nilai acak yang dipilih lebih kecil dari 6.",
+                "Sebuah variabel acak terdistribusi uniform antara 10 dan 30. Tentukan probabilitas bahwa nilai yang dipilih lebih besar dari 25."
+            ]}
+        ];
+
+        // Fungsi untuk menghasilkan soal acak
+        function generateSoal() {
+            const soalContainer = document.getElementById('soalContainer');
+            soalContainer.innerHTML = '';  // Clear soal sebelumnya
+
+            // Pilih kategori soal secara acak
+            const soalCategory = soalList[Math.floor(Math.random() * soalList.length)];
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.className = 'text-xl font-bold text-blue-600 mb-2';
+            categoryTitle.textContent = soalCategory.type;
+            soalContainer.appendChild(categoryTitle);
+
+            // Pilih soal secara acak
+            soalCategory.questions.forEach((soal, index) => {
+                const soalElement = document.createElement('p');
+                soalElement.className = 'text-lg text-gray-800';
+                soalElement.textContent = `${index + 1}. ${soal}`;
+                soalContainer.appendChild(soalElement);
+            });
+        }
+
+        // Event listener untuk tombol generate soal
+        document.getElementById('generateButton').addEventListener('click', generateSoal);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Turunan Kalkulus</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generator Soal Turunan Kalkulus</h1>
+        
+        <button id="generateButton" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 mb-4">Generate Soal</button>
+
+        <div id="soalContainer" class="space-y-4">
+            <!-- Soal akan muncul di sini -->
+        </div>
+    </div>
+
+    <script>
+        // Daftar soal turunan kalkulus
+        const soalList = [
+            { type: "Soal Turunan Dasar", questions: [
+                "Hitung turunan dari f(x) = 3x² + 5x - 7",
+                "Hitung turunan dari f(x) = x³ - 4x² + 2x - 6",
+                "Hitung turunan dari f(x) = 5x⁴ - 3x² + x - 1",
+                "Hitung turunan dari f(x) = 7x³ + 2x² - 4x + 10",
+                "Hitung turunan dari f(x) = x⁵ - 2x³ + x"
+            ]},
+            { type: "Soal Aturan Rantai", questions: [
+                "Hitung turunan dari f(x) = (3x² + 2x + 1)⁴",
+                "Hitung turunan dari f(x) = sin(2x² + 3x)",
+                "Hitung turunan dari f(x) = cos(x³ - 4x² + 3x)",
+                "Hitung turunan dari f(x) = e^(2x² + 5x)",
+                "Hitung turunan dari f(x) = ln(4x² + 3x)"
+            ]},
+            { type: "Soal Aturan Produk", questions: [
+                "Hitung turunan dari f(x) = (3x² + 2)(x³ - 4x + 1)",
+                "Hitung turunan dari f(x) = (x² - 1)(x³ + 2x)",
+                "Hitung turunan dari f(x) = (x² + 3x)(4x - 1)",
+                "Hitung turunan dari f(x) = (x³ - 5)(x⁴ + 2x)",
+                "Hitung turunan dari f(x) = (2x + 1)(x² - 3x)"
+            ]},
+            { type: "Soal Aturan Hasil Bagi", questions: [
+                "Hitung turunan dari f(x) = (x³ - 2x + 1) / (x + 1)",
+                "Hitung turunan dari f(x) = (2x² + 3x) / (x² - 4)",
+                "Hitung turunan dari f(x) = (x⁴ + 3x) / (2x² - x)",
+                "Hitung turunan dari f(x) = (x³ - 4x) / (x² + 1)",
+                "Hitung turunan dari f(x) = (3x² - 5x + 2) / (x + 2)"
+            ]}
+        ];
+
+        // Fungsi untuk menghasilkan soal acak
+        function generateSoal() {
+            const soalContainer = document.getElementById('soalContainer');
+            soalContainer.innerHTML = '';  // Clear soal sebelumnya
+
+            // Pilih kategori soal secara acak
+            const soalCategory = soalList[Math.floor(Math.random() * soalList.length)];
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.className = 'text-xl font-bold text-blue-600 mb-2';
+            categoryTitle.textContent = soalCategory.type;
+            soalContainer.appendChild(categoryTitle);
+
+            // Pilih soal secara acak
+            soalCategory.questions.forEach((soal, index) => {
+                const soalElement = document.createElement('p');
+                soalElement.className = 'text-lg text-gray-800';
+                soalElement.textContent = `${index + 1}. ${soal}`;
+                soalContainer.appendChild(soalElement);
+            });
+        }
+
+        // Event listener untuk tombol generate soal
+        document.getElementById('generateButton').addEventListener('click', generateSoal);
+    </script>
+
+</body>
+</html>

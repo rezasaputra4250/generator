@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Rata-rata, Modus, dan Median</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Rata-rata, Modus, dan Median</h1>
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol di bawah untuk membuat soal!</p>
+        </div>
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="number" id="jawaban" class="border p-2 rounded" placeholder="Jawab">
+        </div>
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let angkaArray, soalTipe, hasilSoal;
+
+        // Fungsi untuk menghitung rata-rata
+        function hitungRataRata(arr) {
+            const total = arr.reduce((acc, num) => acc + num, 0);
+            return total / arr.length;
+        }
+
+        // Fungsi untuk menghitung modus
+        function hitungModus(arr) {
+            const freq = {};
+            let maxFreq = 0;
+            let modus = [];
+
+            arr.forEach(num => {
+                freq[num] = (freq[num] || 0) + 1;
+                if (freq[num] > maxFreq) {
+                    maxFreq = freq[num];
+                }
+            });
+
+            for (let num in freq) {
+                if (freq[num] === maxFreq) {
+                    modus.push(Number(num));
+                }
+            }
+
+            return modus;
+        }
+
+        // Fungsi untuk menghitung median
+        function hitungMedian(arr) {
+            arr.sort((a, b) => a - b);
+            const mid = Math.floor(arr.length / 2);
+            return arr.length % 2 !== 0 ? arr[mid] : (arr[mid - 1] + arr[mid]) / 2;
+        }
+
+        // Fungsi untuk menghasilkan soal
+        function generateSoal() {
+            const soalType = Math.floor(Math.random() * 3); // Pilih tipe soal (rata-rata, modus, median)
+
+            // Membuat array angka acak
+            angkaArray = [];
+            for (let i = 0; i < 5 + Math.floor(Math.random() * 5); i++) { // Array dengan panjang acak antara 5 dan 9
+                angkaArray.push(Math.floor(Math.random() * 10) + 1);
+            }
+
+            // Tentukan soal yang akan ditanyakan
+            if (soalType === 0) {
+                soalTipe = 'rata-rata';
+                hasilSoal = hitungRataRata(angkaArray);
+                document.getElementById("soal").innerText = `Hitung rata-rata dari angka berikut: ${angkaArray.join(', ')}`;
+            } else if (soalType === 1) {
+                soalTipe = 'modus';
+                const modus = hitungModus(angkaArray);
+                hasilSoal = modus.length === 1 ? modus[0] : modus; // Jika ada lebih dari satu modus, tampilkan semuanya
+                document.getElementById("soal").innerText = `Cari modus dari angka berikut: ${angkaArray.join(', ')}`;
+            } else {
+                soalTipe = 'median';
+                hasilSoal = hitungMedian(angkaArray);
+                document.getElementById("soal").innerText = `Cari median dari angka berikut: ${angkaArray.join(', ')}`;
+            }
+
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = parseFloat(document.getElementById("jawaban").value);
+            if (Array.isArray(hasilSoal)) {
+                if (hasilSoal.includes(jawaban)) {
+                    document.getElementById("hasil").innerText = "Jawaban Benar!";
+                    document.getElementById("hasil").classList.remove("text-red-500");
+                    document.getElementById("hasil").classList.add("text-green-500");
+                } else {
+                    document.getElementById("hasil").innerText = "Jawaban Salah!";
+                    document.getElementById("hasil").classList.remove("text-green-500");
+                    document.getElementById("hasil").classList.add("text-red-500");
+                }
+            } else {
+                if (Math.abs(jawaban - hasilSoal) < 0.0001) {
+                    document.getElementById("hasil").innerText = "Jawaban Benar!";
+                    document.getElementById("hasil").classList.remove("text-red-500");
+                    document.getElementById("hasil").classList.add("text-green-500");
+                } else {
+                    document.getElementById("hasil").innerText = "Jawaban Salah!";
+                    document.getElementById("hasil").classList.remove("text-green-500");
+                    document.getElementById("hasil").classList.add("text-red-500");
+                }
+            }
+        }
+    </script>
+</body>
+</html>

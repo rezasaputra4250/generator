@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Identitas Trigonometri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Identitas Trigonometri</h1>
+        
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol untuk membuat soal!</p>
+        </div>
+
+        <div class="mb-4">
+            <p id="jenis_soal" class="text-center font-semibold text-lg">Soal:</p>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="text" id="jawaban" class="border p-2 rounded w-16" placeholder="Jawaban">
+        </div>
+
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let jawabanBenar, soalText;
+
+        // Fungsi untuk menghasilkan soal identitas trigonometri
+        function generateSoal() {
+            // Pilih jenis soal acak (menggunakan identitas trigonometri)
+            const tipeSoal = Math.random();
+            
+            if (tipeSoal < 0.25) {
+                // Soal identitas Pythagoras: sin²(θ) + cos²(θ) = 1
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                soalText = `Diketahui bahwa sin²(θ) + cos²(θ) = 1. Hitung nilai cos(θ) jika sin(θ) = ${Math.sin(angle * Math.PI / 180).toFixed(2)} dan θ = ${angle}°`;
+                jawabanBenar = Math.sqrt(1 - Math.pow(Math.sin(angle * Math.PI / 180), 2)).toFixed(2); // Menghitung cos(θ) dari identitas
+            } else if (tipeSoal < 0.5) {
+                // Soal identitas tangen: tan(θ) = sin(θ) / cos(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                const sinVal = Math.sin(angle * Math.PI / 180).toFixed(2);
+                const cosVal = Math.cos(angle * Math.PI / 180).toFixed(2);
+                soalText = `Diketahui sin(θ) = ${sinVal} dan cos(θ) = ${cosVal}. Hitung nilai tan(θ)`;
+                jawabanBenar = (parseFloat(sinVal) / parseFloat(cosVal)).toFixed(2); // Menggunakan identitas tan(θ) = sin(θ) / cos(θ)
+            } else if (tipeSoal < 0.75) {
+                // Soal identitas ganda: sin(2θ) = 2sin(θ)cos(θ)
+                const angle = Math.floor(Math.random() * 46) + 1; // Sudut acak antara 1° dan 45°
+                const sinVal = Math.sin(angle * Math.PI / 180).toFixed(2);
+                const cosVal = Math.cos(angle * Math.PI / 180).toFixed(2);
+                soalText = `Diketahui sin(θ) = ${sinVal} dan cos(θ) = ${cosVal}. Hitung nilai sin(2θ)`;
+                jawabanBenar = (2 * parseFloat(sinVal) * parseFloat(cosVal)).toFixed(2); // Menggunakan identitas sin(2θ) = 2sin(θ)cos(θ)
+            } else {
+                // Soal identitas sekans: sec(θ) = 1 / cos(θ)
+                const angle = Math.floor(Math.random() * 91); // Sudut acak antara 0° dan 90°
+                const cosVal = Math.cos(angle * Math.PI / 180).toFixed(2);
+                soalText = `Diketahui cos(θ) = ${cosVal}. Hitung nilai sec(θ)`;
+                jawabanBenar = (1 / parseFloat(cosVal)).toFixed(2); // Menggunakan identitas sec(θ) = 1 / cos(θ)
+            }
+
+            // Menampilkan soal dan reset jawaban
+            document.getElementById("soal").innerText = soalText;
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = parseFloat(document.getElementById("jawaban").value.trim());
+
+            // Memeriksa apakah jawaban yang dimasukkan benar
+            if (Math.abs(jawaban - jawabanBenar) < 0.01) { // dengan toleransi 0.01 untuk perhitungan trigonometri
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>

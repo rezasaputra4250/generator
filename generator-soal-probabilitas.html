@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Probabilitas</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generator Soal Probabilitas</h1>
+        
+        <button id="generateButton" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 mb-4">Generate Soal</button>
+
+        <div id="soalContainer" class="space-y-4">
+            <!-- Soal akan muncul di sini -->
+        </div>
+    </div>
+
+    <script>
+        // Daftar soal probabilitas
+        const soalList = [
+            { type: "Soal Peluang Dasar", questions: [
+                "Jika sebuah dadu 6 sisi dilempar, tentukan probabilitas mendapatkan angka genap.",
+                "Sebuah koin dilempar, tentukan probabilitas mendapatkan gambar.",
+                "Sebuah kotak berisi 5 bola merah dan 3 bola biru. Tentukan probabilitas menarik bola merah.",
+                "Jika dalam sebuah kelas terdapat 12 laki-laki dan 8 perempuan, tentukan probabilitas memilih seorang perempuan secara acak.",
+                "Dari 5 kartu yang terdiri dari 3 kartu merah dan 2 kartu biru, tentukan probabilitas menarik kartu merah."
+            ]},
+            { type: "Soal Probabilitas Gabungan", questions: [
+                "Jika peluang A terjadi adalah 0.3 dan peluang B terjadi adalah 0.5, tentukan probabilitas A atau B terjadi jika A dan B tidak saling lepas.",
+                "Jika dua dadu dilempar, tentukan probabilitas mendapatkan jumlah mata dadu 7.",
+                "Dalam sebuah undian, terdapat 3 bola merah, 2 bola hijau, dan 5 bola biru. Jika dua bola diambil secara acak tanpa penggantian, tentukan probabilitas mengambil dua bola merah.",
+                "Dua peristiwa A dan B adalah saling lepas. Jika P(A) = 0.4 dan P(B) = 0.5, tentukan P(A atau B).",
+                "Dalam pelemparan dua koin, tentukan probabilitas mendapatkan satu gambar dan satu angka."
+            ]},
+            { type: "Soal Probabilitas Kondisional", questions: [
+                "Diketahui dalam sebuah kelas terdapat 20 siswa, 12 laki-laki dan 8 perempuan. Jika seorang siswa dipilih secara acak dan siswa yang dipilih ternyata laki-laki, tentukan probabilitas siswa yang dipilih mengenakan kacamata jika probabilitas laki-laki mengenakan kacamata adalah 0.6.",
+                "Jika dua kartu diambil secara acak dari dek kartu yang terdiri dari 52 kartu, tentukan probabilitas kartu kedua adalah hati, diberikan bahwa kartu pertama adalah hati.",
+                "Tentukan probabilitas memperoleh 2 angka genap dalam 2 pelemparan dadu secara berurutan.",
+                "Jika terdapat 3 buah kotak: kotak A berisi 3 bola merah dan 2 bola biru, kotak B berisi 1 bola merah dan 4 bola biru, dan kotak C berisi 2 bola merah dan 3 bola biru, tentukan probabilitas memilih bola merah dari kotak A jika kotak A terpilih dengan probabilitas 0.5.",
+                "Dalam sebuah lotre, peluang menang adalah 0.01 dan peluang tidak menang adalah 0.99. Jika diketahui bahwa seseorang tidak menang pada undian pertama, tentukan probabilitas bahwa dia tidak akan menang pada undian kedua."
+            ]}
+        ];
+
+        // Fungsi untuk menghasilkan soal acak
+        function generateSoal() {
+            const soalContainer = document.getElementById('soalContainer');
+            soalContainer.innerHTML = '';  // Clear soal sebelumnya
+
+            // Pilih kategori soal secara acak
+            const soalCategory = soalList[Math.floor(Math.random() * soalList.length)];
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.className = 'text-xl font-bold text-blue-600 mb-2';
+            categoryTitle.textContent = soalCategory.type;
+            soalContainer.appendChild(categoryTitle);
+
+            // Pilih soal secara acak
+            soalCategory.questions.forEach((soal, index) => {
+                const soalElement = document.createElement('p');
+                soalElement.className = 'text-lg text-gray-800';
+                soalElement.textContent = `${index + 1}. ${soal}`;
+                soalContainer.appendChild(soalElement);
+            });
+        }
+
+        // Event listener untuk tombol generate soal
+        document.getElementById('generateButton').addEventListener('click', generateSoal);
+    </script>
+
+</body>
+</html>

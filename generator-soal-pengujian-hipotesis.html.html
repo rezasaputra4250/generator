@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Pengujian Hipotesis</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generator Soal Pengujian Hipotesis</h1>
+        
+        <button id="generateButton" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 mb-4">Generate Soal</button>
+
+        <div id="soalContainer" class="space-y-4">
+            <!-- Soal akan muncul di sini -->
+        </div>
+    </div>
+
+    <script>
+        // Daftar soal pengujian hipotesis
+        const soalList = [
+            { type: "Soal Uji Hipotesis Rata-rata (Uji t)", questions: [
+                "Sebuah perusahaan mengklaim bahwa rata-rata berat barang yang diproduksi adalah 5 kg. Sebuah sampel acak terdiri dari 25 barang dengan rata-rata berat 4,8 kg dan deviasi standar 0,4 kg. Uji hipotesis apakah klaim perusahaan benar dengan tingkat signifikansi 0,05.",
+                "Dalam suatu penelitian, ditemukan rata-rata tinggi badan mahasiswa adalah 160 cm dengan deviasi standar 8 cm. Uji hipotesis apakah rata-rata tinggi badan mahasiswa di universitas tersebut lebih dari 158 cm pada tingkat signifikansi 0,01.",
+                "Sebuah pabrik mengklaim bahwa rata-rata waktu yang diperlukan untuk memproduksi satu barang adalah 10 menit. Dalam percobaan, sampel acak dari 15 produksi menghasilkan rata-rata waktu produksi 9,5 menit dengan deviasi standar 1,2 menit. Uji hipotesis apakah klaim pabrik benar pada tingkat signifikansi 0,05.",
+                "Di sebuah restoran, rata-rata berat porsi makanan adalah 250 gram. Dalam sebuah sampel acak dari 30 porsi, rata-rata berat porsi adalah 240 gram dengan deviasi standar 15 gram. Uji hipotesis apakah rata-rata berat porsi lebih dari 250 gram dengan tingkat signifikansi 0,05.",
+                "Sebuah sekolah mengklaim bahwa rata-rata nilai ujian siswa adalah 75. Dalam sebuah sampel acak, ditemukan rata-rata nilai ujian 78 dengan deviasi standar 10 pada sampel 40 siswa. Uji hipotesis apakah klaim sekolah benar dengan tingkat signifikansi 0,05."
+            ]},
+            { type: "Soal Uji Hipotesis Proporsi (Uji Z)", questions: [
+                "Dalam sebuah survei, 400 orang dipilih secara acak, dan 220 di antaranya setuju dengan kebijakan baru. Uji hipotesis apakah proporsi orang yang setuju lebih dari 50% dengan tingkat signifikansi 0,05.",
+                "Sebuah perusahaan mengklaim bahwa 60% pelanggan puas dengan layanan mereka. Dalam sebuah survei terhadap 100 pelanggan, 55 pelanggan menyatakan puas. Uji hipotesis apakah proporsi pelanggan puas lebih dari 60% pada tingkat signifikansi 0,05.",
+                "Dari 1000 orang yang disurvei, 580 orang setuju dengan proposal yang diajukan. Uji hipotesis apakah proporsi yang setuju lebih dari 50% dengan tingkat signifikansi 0,01.",
+                "Dalam sebuah penelitian tentang kebiasaan membeli makanan online, 80% dari 500 responden menyatakan mereka membeli makanan online setidaknya sekali seminggu. Uji hipotesis apakah proporsi tersebut lebih dari 75% dengan tingkat signifikansi 0,05.",
+                "Dalam sebuah polling, 60% dari 800 responden mendukung kebijakan pemerintah baru. Uji hipotesis apakah proporsi dukungan lebih dari 50% dengan tingkat signifikansi 0,01."
+            ]},
+            { type: "Soal Uji Chi-Square", questions: [
+                "Dalam sebuah penelitian tentang preferensi warna, 100 orang dipilih secara acak. Hasil yang diperoleh adalah 40 orang lebih memilih merah, 30 memilih biru, dan 30 memilih hijau. Uji apakah preferensi warna berbeda secara signifikan dengan distribusi yang diharapkan (33% untuk setiap warna) pada tingkat signifikansi 0,05.",
+                "Sebuah penelitian dilakukan pada 200 pasien untuk mengetahui jenis kelamin dan status perokok. Data yang diperoleh adalah 50 pria perokok, 30 pria tidak merokok, 60 wanita perokok, dan 60 wanita tidak merokok. Uji apakah terdapat hubungan antara jenis kelamin dan kebiasaan merokok pada tingkat signifikansi 0,05.",
+                "Dalam sebuah perusahaan, data mengenai status pendidikan dan status pekerjaan dari 300 karyawan dikumpulkan. Data menunjukkan 80 karyawan dengan pendidikan tinggi bekerja penuh waktu, 50 bekerja paruh waktu, dan 20 bekerja sementara. Uji apakah status pendidikan dan pekerjaan saling bergantung pada tingkat signifikansi 0,05.",
+                "Seorang peneliti ingin menguji apakah ada perbedaan proporsi preferensi jenis musik di antara empat grup usia (18-25, 26-35, 36-45, 46+). Data yang diperoleh adalah jumlah orang yang memilih setiap jenis musik di tiap grup usia. Uji apakah ada perbedaan preferensi jenis musik antar grup usia pada tingkat signifikansi 0,01.",
+                "Dari 150 karyawan yang disurvei, 50 menyatakan puas dengan pekerjaan mereka, 40 merasa netral, dan 60 merasa tidak puas. Uji apakah distribusi kepuasan kerja ini berbeda dengan distribusi yang diharapkan (30% puas, 40% netral, 30% tidak puas) pada tingkat signifikansi 0,05."
+            ]},
+            { type: "Soal Uji Hipotesis Dua Arah", questions: [
+                "Sebuah perusahaan mengklaim bahwa rata-rata umur karyawan adalah 35 tahun. Dalam sampel acak dari 30 karyawan, rata-rata umur adalah 37 tahun dengan deviasi standar 5 tahun. Uji hipotesis apakah rata-rata umur karyawan berbeda dari 35 tahun pada tingkat signifikansi 0,05.",
+                "Dalam sebuah percobaan, dua kelompok diberi perlakuan yang berbeda untuk mengukur pengaruh terhadap hasil ujian. Kelompok A memiliki rata-rata nilai 80 dengan deviasi standar 10, dan kelompok B memiliki rata-rata nilai 85 dengan deviasi standar 12. Uji hipotesis apakah kedua kelompok memiliki rata-rata nilai yang berbeda pada tingkat signifikansi 0,01.",
+                "Sebuah pabrik mengklaim bahwa waktu rata-rata produksi untuk setiap unit adalah 30 menit. Dalam sampel acak dari 25 unit, rata-rata waktu produksi adalah 32 menit dengan deviasi standar 4 menit. Uji hipotesis apakah rata-rata waktu produksi berbeda dari 30 menit pada tingkat signifikansi 0,05.",
+                "Sebuah sekolah mengklaim bahwa rata-rata nilai ujian matematika siswa adalah 70. Dalam sampel acak dari 50 siswa, rata-rata nilai adalah 72 dengan deviasi standar 8. Uji hipotesis apakah rata-rata nilai ujian matematika siswa berbeda dari 70 pada tingkat signifikansi 0,05.",
+                "Sebuah perusahaan mengklaim bahwa proporsi produk cacat adalah 2%. Dalam sampel acak dari 500 produk, ditemukan bahwa 15 produk cacat. Uji hipotesis apakah proporsi cacat berbeda dari 2% pada tingkat signifikansi 0,05."
+            ]}
+        ];
+
+        // Fungsi untuk menghasilkan soal acak
+        function generateSoal() {
+            const soalContainer = document.getElementById('soalContainer');
+            soalContainer.innerHTML = '';  // Clear soal sebelumnya
+
+            // Pilih kategori soal secara acak
+            const soalCategory = soalList[Math.floor(Math.random() * soalList.length)];
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.className = 'text-xl font-bold text-blue-600 mb-2';
+            categoryTitle.textContent = soalCategory.type;
+            soalContainer.appendChild(categoryTitle);
+
+            // Pilih soal secara acak
+            soalCategory.questions.forEach((soal, index) => {
+                const soalElement = document.createElement('p');
+                soalElement.className = 'text-lg text-gray-800';
+                soalElement.textContent = `${index + 1}. ${soal}`;
+                soalContainer.appendChild(soalElement);
+            });
+        }
+
+        // Event listener untuk tombol generate soal
+        document.getElementById('generateButton').addEventListener('click', generateSoal);
+    </script>
+
+</body>
+</html>

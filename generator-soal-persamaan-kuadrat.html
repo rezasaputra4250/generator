@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Persamaan Kuadrat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Persamaan Kuadrat</h1>
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol di bawah untuk membuat soal!</p>
+        </div>
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="text" id="jawaban" class="border p-2 rounded" placeholder="Jawaban (misal: x1, x2)">
+        </div>
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let a, b, c, x1, x2, soalText;
+
+        // Fungsi untuk menghitung akar persamaan kuadrat
+        function hitungAkar() {
+            const diskriminan = b * b - 4 * a * c;
+            if (diskriminan > 0) {
+                x1 = (-b + Math.sqrt(diskriminan)) / (2 * a);
+                x2 = (-b - Math.sqrt(diskriminan)) / (2 * a);
+            } else if (diskriminan === 0) {
+                x1 = x2 = -b / (2 * a); // Hanya satu akar
+            } else {
+                x1 = x2 = null; // Tidak ada solusi nyata
+            }
+        }
+
+        // Fungsi untuk menghasilkan soal persamaan kuadrat
+        function generateSoal() {
+            // Membuat koefisien acak untuk a, b, c
+            a = Math.floor(Math.random() * 5) + 1; // Bilangan acak antara 1 dan 5
+            b = Math.floor(Math.random() * 9) - 4; // Bilangan acak antara -4 dan 4
+            c = Math.floor(Math.random() * 9) - 4; // Bilangan acak antara -4 dan 4
+
+            // Menyusun soal persamaan kuadrat: ax^2 + bx + c = 0
+            soalText = `${a}x² + ${b}x + ${c} = 0`;
+
+            // Menghitung akar persamaan
+            hitungAkar();
+
+            // Menampilkan soal
+            document.getElementById("soal").innerText = `Selesaikan persamaan: ${soalText}`;
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = document.getElementById("jawaban").value.trim().toLowerCase();
+            let jawabanBenar = false;
+
+            if (x1 !== null && x2 !== null) {
+                // Jika ada dua akar, periksa apakah jawaban benar
+                const jawabArray = jawaban.split(',').map(e => e.trim());
+                jawabArray.sort(); // Mengurutkan agar urutan tidak masalah
+                if (jawabArray.length === 2 && 
+                    (parseFloat(jawabArray[0]) === x1 && parseFloat(jawabArray[1]) === x2 || 
+                     parseFloat(jawabArray[0]) === x2 && parseFloat(jawabArray[1]) === x1)) {
+                    jawabanBenar = true;
+                }
+            } else if (x1 !== null) {
+                // Jika hanya ada satu akar
+                if (parseFloat(jawaban) === x1) {
+                    jawabanBenar = true;
+                }
+            }
+
+            if (jawabanBenar) {
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>

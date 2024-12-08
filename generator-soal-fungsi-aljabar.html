@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Fungsi Aljabar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Fungsi Aljabar</h1>
+        
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol untuk membuat soal!</p>
+        </div>
+
+        <div class="mb-4">
+            <p id="fungsi" class="text-center font-semibold text-lg">Fungsi:</p>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="number" id="xInput" class="border p-2 rounded w-16" placeholder="x">
+        </div>
+
+        <div class="mt-4">
+            <button onclick="hitungNilaiFungsi()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Hitung Nilai Fungsi</button>
+        </div>
+
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let a, b, c, fungsiText, tipeFungsi;
+
+        // Fungsi untuk menghasilkan soal fungsi
+        function generateSoal() {
+            // Pilih tipe fungsi acak: linear atau kuadrat
+            tipeFungsi = Math.random() < 0.5 ? 'linear' : 'kuadrat';
+
+            // Membuat koefisien acak untuk a, b, c
+            a = Math.floor(Math.random() * 5) + 1; // Bilangan acak antara 1 dan 5
+            b = Math.floor(Math.random() * 9) - 4; // Bilangan acak antara -4 dan 4
+            c = Math.floor(Math.random() * 9) - 4; // Bilangan acak antara -4 dan 4
+
+            // Menyusun soal berdasarkan tipe fungsi
+            if (tipeFungsi === 'linear') {
+                fungsiText = `${a}x + ${b}`;
+            } else {
+                fungsiText = `${a}x² + ${b}x + ${c}`;
+            }
+
+            // Menampilkan soal
+            document.getElementById("soal").innerText = `Fungsi: f(x) = ${fungsiText}`;
+            document.getElementById("xInput").value = ''; // Reset input x
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk menghitung nilai fungsi untuk input x
+        function hitungNilaiFungsi() {
+            let x = parseFloat(document.getElementById("xInput").value);
+            if (isNaN(x)) {
+                document.getElementById("hasil").innerText = "Masukkan nilai x yang valid!";
+                return;
+            }
+
+            let hasilFungsi;
+            if (tipeFungsi === 'linear') {
+                // Fungsi Linear: f(x) = ax + b
+                hasilFungsi = a * x + b;
+            } else {
+                // Fungsi Kuadrat: f(x) = ax² + bx + c
+                hasilFungsi = a * x * x + b * x + c;
+            }
+
+            document.getElementById("hasil").innerText = `Nilai f(${x}) = ${hasilFungsi}`;
+        }
+    </script>
+</body>
+</html>

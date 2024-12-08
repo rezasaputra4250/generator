@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Limit Kalkulus</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generator Soal Limit Kalkulus</h1>
+        
+        <button id="generateButton" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 mb-4">Generate Soal</button>
+
+        <div id="soalContainer" class="space-y-4">
+            <!-- Soal akan muncul di sini -->
+        </div>
+    </div>
+
+    <script>
+        // Daftar soal limit kalkulus
+        const soalList = [
+            { type: "Soal Limit Mendekati Suatu Nilai", questions: [
+                "Hitung limit berikut: Lim(x → 2) dari (x² - 4) / (x - 2)",
+                "Hitung limit berikut: Lim(x → 3) dari (x³ - 27) / (x - 3)",
+                "Hitung limit berikut: Lim(x → 0) dari (sin(x) / x)",
+                "Hitung limit berikut: Lim(x → -1) dari (x³ + 1) / (x + 1)",
+                "Hitung limit berikut: Lim(x → 0) dari (tan(x) / x)"
+            ]},
+            { type: "Soal Limit Tak Terhingga", questions: [
+                "Hitung limit berikut: Lim(x → ∞) dari (2x² + 3x - 5) / (x² - 4x + 1)",
+                "Hitung limit berikut: Lim(x → ∞) dari (3x + 1) / (x + 2)",
+                "Hitung limit berikut: Lim(x → ∞) dari (4x² + 7x) / (x² - 2x + 1)",
+                "Hitung limit berikut: Lim(x → ∞) dari (5x³ + 4x² - 3x) / (x³ + 2x²)",
+                "Hitung limit berikut: Lim(x → -∞) dari (3x² + 2x) / (x² - 4x + 3)"
+            ]},
+            { type: "Soal Limit dengan Aturan L'Hopital", questions: [
+                "Hitung limit berikut dengan aturan L'Hopital: Lim(x → 0) dari (sin(x) - x) / (x²)",
+                "Hitung limit berikut dengan aturan L'Hopital: Lim(x → 0) dari (e^x - 1) / x",
+                "Hitung limit berikut dengan aturan L'Hopital: Lim(x → 0) dari (1 - cos(x)) / x²",
+                "Hitung limit berikut dengan aturan L'Hopital: Lim(x → 0) dari (tan(x) - x) / (x³)",
+                "Hitung limit berikut dengan aturan L'Hopital: Lim(x → 0) dari (ln(1+x) - x) / (x²)"
+            ]},
+            { type: "Soal Limit dari Fungsi Rasional", questions: [
+                "Hitung limit berikut: Lim(x → 1) dari (x² - 1) / (x - 1)",
+                "Hitung limit berikut: Lim(x → -2) dari (x³ + 8) / (x + 2)",
+                "Hitung limit berikut: Lim(x → 0) dari (x² + 3x + 2) / (x² - 4)",
+                "Hitung limit berikut: Lim(x → 3) dari (x³ - 27) / (x - 3)",
+                "Hitung limit berikut: Lim(x → -1) dari (x⁴ - 1) / (x² - 1)"
+            ]}
+        ];
+
+        // Fungsi untuk menghasilkan soal acak
+        function generateSoal() {
+            const soalContainer = document.getElementById('soalContainer');
+            soalContainer.innerHTML = '';  // Clear soal sebelumnya
+
+            // Pilih kategori soal secara acak
+            const soalCategory = soalList[Math.floor(Math.random() * soalList.length)];
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.className = 'text-xl font-bold text-blue-600 mb-2';
+            categoryTitle.textContent = soalCategory.type;
+            soalContainer.appendChild(categoryTitle);
+
+            // Pilih soal secara acak
+            soalCategory.questions.forEach((soal, index) => {
+                const soalElement = document.createElement('p');
+                soalElement.className = 'text-lg text-gray-800';
+                soalElement.textContent = `${index + 1}. ${soal}`;
+                soalContainer.appendChild(soalElement);
+            });
+        }
+
+        // Event listener untuk tombol generate soal
+        document.getElementById('generateButton').addEventListener('click', generateSoal);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Sistem Kongruensi</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generator Soal Sistem Kongruensi</h1>
+        
+        <button id="generateButton" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 mb-4">Generate Soal</button>
+
+        <div id="soalContainer" class="space-y-4">
+            <!-- Soal akan muncul di sini -->
+        </div>
+    </div>
+
+    <script>
+        // Daftar soal terkait sistem kongruensi
+        const soalList = [
+            { type: "Sistem Kongruensi Linier", questions: [
+                "Selesaikan sistem kongruensi berikut: x ≡ 2 (mod 5), x ≡ 3 (mod 7).",
+                "Selesaikan sistem kongruensi: x ≡ 1 (mod 3), x ≡ 4 (mod 5).",
+                "Cari solusi dari sistem kongruensi berikut: x ≡ 4 (mod 6), x ≡ 2 (mod 9).",
+                "Selesaikan sistem kongruensi: x ≡ 2 (mod 7), x ≡ 1 (mod 5).",
+                "Temukan solusi dari sistem kongruensi: x ≡ 5 (mod 11), x ≡ 6 (mod 13)."
+            ]},
+            { type: "Kongruensi Modulo", questions: [
+                "Apakah 23 kongruen dengan 3 modulo 10? Jelaskan.",
+                "Buktikan bahwa 15 ≡ 7 (mod 8).",
+                "Tentukan apakah 51 ≡ 9 (mod 6).",
+                "Cari nilai x yang memenuhi kongruensi 5x ≡ 1 (mod 11).",
+                "Buktikan bahwa 45 ≡ 2 (mod 7)."
+            ]},
+            { type: "Teorema Kongruensi", questions: [
+                "Buktikan bahwa jika a ≡ b (mod m) dan c ≡ d (mod m), maka (a + c) ≡ (b + d) (mod m).",
+                "Buktikan bahwa jika a ≡ b (mod m), maka a² ≡ b² (mod m).",
+                "Tunjukkan bahwa jika a ≡ b (mod m), maka a³ ≡ b³ (mod m).",
+                "Buktikan bahwa jika a ≡ b (mod m), maka a⁴ ≡ b⁴ (mod m).",
+                "Tunjukkan bahwa jika a ≡ b (mod m), maka a + b ≡ 2b (mod m)."
+            ]},
+            { type: "Sistem Kongruensi dengan Teorema Chinese Remainder", questions: [
+                "Gunakan teorema Chinese Remainder untuk menyelesaikan sistem kongruensi: x ≡ 1 (mod 4), x ≡ 2 (mod 5), x ≡ 3 (mod 7).",
+                "Selesaikan sistem kongruensi dengan menggunakan Chinese Remainder: x ≡ 3 (mod 5), x ≡ 4 (mod 11), x ≡ 5 (mod 13).",
+                "Gunakan teorema Chinese Remainder untuk menyelesaikan sistem kongruensi: x ≡ 2 (mod 3), x ≡ 1 (mod 4), x ≡ 2 (mod 5).",
+                "Selesaikan sistem kongruensi menggunakan Chinese Remainder: x ≡ 1 (mod 6), x ≡ 3 (mod 7), x ≡ 2 (mod 11).",
+                "Gunakan Chinese Remainder untuk menyelesaikan sistem kongruensi: x ≡ 2 (mod 3), x ≡ 1 (mod 5), x ≡ 3 (mod 7)."
+            ]}
+        ];
+
+        // Fungsi untuk menghasilkan soal acak
+        function generateSoal() {
+            const soalContainer = document.getElementById('soalContainer');
+            soalContainer.innerHTML = '';  // Clear soal sebelumnya
+
+            // Pilih kategori soal secara acak
+            const soalCategory = soalList[Math.floor(Math.random() * soalList.length)];
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.className = 'text-xl font-bold text-blue-600 mb-2';
+            categoryTitle.textContent = soalCategory.type;
+            soalContainer.appendChild(categoryTitle);
+
+            // Pilih soal secara acak
+            soalCategory.questions.forEach((soal, index) => {
+                const soalElement = document.createElement('p');
+                soalElement.className = 'text-lg text-gray-800';
+                soalElement.textContent = `${index + 1}. ${soal}`;
+                soalContainer.appendChild(soalElement);
+            });
+        }
+
+        // Event listener untuk tombol generate soal
+        document.getElementById('generateButton').addEventListener('click', generateSoal);
+    </script>
+
+</body>
+</html>

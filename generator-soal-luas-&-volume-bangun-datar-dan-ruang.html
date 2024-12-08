@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Luas & Volume Bangun Datar dan Ruang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Luas & Volume</h1>
+        
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol untuk membuat soal!</p>
+        </div>
+
+        <div class="mb-4">
+            <p id="jenis_soal" class="text-center font-semibold text-lg">Soal:</p>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="number" id="jawaban" class="border p-2 rounded w-16" placeholder="Jawaban">
+        </div>
+
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let a, b, c, r, h, soalText, jawabanBenar, jenisSoal;
+
+        // Fungsi untuk menghasilkan soal luas dan volume
+        function generateSoal() {
+            // Pilih soal acak: luas bangun datar atau volume bangun ruang
+            jenisSoal = Math.random() < 0.5 ? 'luas' : 'volume';
+
+            if (jenisSoal === 'luas') {
+                // Pilih jenis bangun datar: persegi, segitiga, atau lingkaran
+                const tipeBangunDatar = Math.random();
+                if (tipeBangunDatar < 0.33) {
+                    // Persegi
+                    a = Math.floor(Math.random() * 10) + 1; // sisi persegi
+                    soalText = `Hitung luas persegi dengan sisi ${a}.`;
+                    jawabanBenar = a * a;
+                } else if (tipeBangunDatar < 0.66) {
+                    // Segitiga
+                    a = Math.floor(Math.random() * 10) + 1; // alas segitiga
+                    h = Math.floor(Math.random() * 10) + 1; // tinggi segitiga
+                    soalText = `Hitung luas segitiga dengan alas ${a} dan tinggi ${h}.`;
+                    jawabanBenar = 0.5 * a * h;
+                } else {
+                    // Lingkaran
+                    r = Math.floor(Math.random() * 10) + 1; // radius lingkaran
+                    soalText = `Hitung luas lingkaran dengan jari-jari ${r}.`;
+                    jawabanBenar = Math.PI * r * r;
+                }
+            } else {
+                // Pilih jenis bangun ruang: kubus, balok, atau bola
+                const tipeBangunRuang = Math.random();
+                if (tipeBangunRuang < 0.33) {
+                    // Kubus
+                    a = Math.floor(Math.random() * 10) + 1; // panjang sisi kubus
+                    soalText = `Hitung volume kubus dengan panjang sisi ${a}.`;
+                    jawabanBenar = Math.pow(a, 3);
+                } else if (tipeBangunRuang < 0.66) {
+                    // Balok
+                    a = Math.floor(Math.random() * 10) + 1; // panjang balok
+                    b = Math.floor(Math.random() * 10) + 1; // lebar balok
+                    h = Math.floor(Math.random() * 10) + 1; // tinggi balok
+                    soalText = `Hitung volume balok dengan panjang ${a}, lebar ${b}, dan tinggi ${h}.`;
+                    jawabanBenar = a * b * h;
+                } else {
+                    // Bola
+                    r = Math.floor(Math.random() * 10) + 1; // radius bola
+                    soalText = `Hitung volume bola dengan jari-jari ${r}.`;
+                    jawabanBenar = (4 / 3) * Math.PI * Math.pow(r, 3);
+                }
+            }
+
+            // Menampilkan soal dan reset jawaban
+            document.getElementById("soal").innerText = soalText;
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = parseFloat(document.getElementById("jawaban").value.trim());
+
+            // Memeriksa apakah jawaban yang dimasukkan benar
+            if (Math.abs(jawaban - jawabanBenar) < 0.01) {
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>

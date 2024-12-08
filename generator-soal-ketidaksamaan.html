@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Ketidaksamaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Ketidaksamaan</h1>
+        
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol untuk membuat soal!</p>
+        </div>
+
+        <div class="mb-4">
+            <p id="ketidaksamaan" class="text-center font-semibold text-lg">Ketidaksamaan:</p>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="text" id="jawaban" class="border p-2 rounded w-16" placeholder="Jawaban">
+        </div>
+
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let a, b, operator, soalText, solusi;
+
+        // Fungsi untuk menghasilkan soal ketidaksamaan
+        function generateSoal() {
+            // Membuat koefisien acak untuk a, b
+            a = Math.floor(Math.random() * 5) + 1; // Bilangan acak antara 1 dan 5
+            b = Math.floor(Math.random() * 9) - 4; // Bilangan acak antara -4 dan 4
+
+            // Membuat operator acak
+            const operators = ['>', '>=', '<', '<='];
+            operator = operators[Math.floor(Math.random() * operators.length)];
+
+            // Menyusun soal berdasarkan operator
+            soalText = `${a}x + ${b} ${operator} 0`;
+
+            // Menyelesaikan ketidaksamaan
+            solusi = solveInequality(a, b, operator);
+
+            // Menampilkan soal
+            document.getElementById("soal").innerText = `Selesaikan ketidaksamaan: ${soalText}`;
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk menyelesaikan ketidaksamaan
+        function solveInequality(a, b, operator) {
+            let solusi = '';
+
+            // Menyelesaikan ketidaksamaan linear berdasarkan operator
+            if (operator === '>') {
+                solusi = `x > ${-b / a}`;
+            } else if (operator === '>=') {
+                solusi = `x >= ${-b / a}`;
+            } else if (operator === '<') {
+                solusi = `x < ${-b / a}`;
+            } else if (operator === '<=') {
+                solusi = `x <= ${-b / a}`;
+            }
+
+            return solusi;
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = document.getElementById("jawaban").value.trim().toLowerCase();
+
+            // Memeriksa apakah jawaban yang dimasukkan benar
+            if (jawaban === solusi.toLowerCase()) {
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>

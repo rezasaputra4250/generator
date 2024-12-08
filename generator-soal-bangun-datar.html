@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal Bangun Datar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h1 class="text-xl font-bold text-center mb-4">Generator Soal Bangun Datar</h1>
+        <div class="mb-4">
+            <p id="soal" class="text-lg text-center">Klik tombol di bawah untuk membuat soal!</p>
+        </div>
+        <div class="flex justify-between">
+            <button onclick="generateSoal()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none">Buat Soal</button>
+            <input type="number" step="any" id="jawaban" class="border p-2 rounded" placeholder="Jawab">
+        </div>
+        <div class="mt-4">
+            <button onclick="checkJawaban()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none">Cek Jawaban</button>
+        </div>
+        <p id="hasil" class="mt-4 text-center text-lg"></p>
+    </div>
+
+    <script>
+        let num1, num2, hasilSoal, bentuk;
+
+        // Fungsi untuk menghasilkan soal bangun datar
+        function generateSoal() {
+            // Menentukan bentuk bangun datar (persegi, persegi panjang, segitiga, atau lingkaran)
+            const randomBentuk = Math.floor(Math.random() * 4);
+            bentuk = randomBentuk === 0 ? 'persegi' : randomBentuk === 1 ? 'persegi panjang' : randomBentuk === 2 ? 'segitiga' : 'lingkaran';
+
+            if (bentuk === 'persegi') {
+                num1 = Math.floor(Math.random() * 10) + 1; // Panjang sisi persegi
+                hasilSoal = 4 * num1; // Keliling persegi
+                document.getElementById("soal").innerText = `Berapa keliling persegi dengan panjang sisi ${num1}?`;
+            } else if (bentuk === 'persegi panjang') {
+                num1 = Math.floor(Math.random() * 10) + 1; // Panjang persegi panjang
+                num2 = Math.floor(Math.random() * 10) + 1; // Lebar persegi panjang
+                hasilSoal = 2 * (num1 + num2); // Keliling persegi panjang
+                document.getElementById("soal").innerText = `Berapa keliling persegi panjang dengan panjang ${num1} dan lebar ${num2}?`;
+            } else if (bentuk === 'segitiga') {
+                num1 = Math.floor(Math.random() * 10) + 1; // Alas segitiga
+                num2 = Math.floor(Math.random() * 10) + 1; // Tinggi segitiga
+                hasilSoal = 0.5 * num1 * num2; // Luas segitiga
+                document.getElementById("soal").innerText = `Berapa luas segitiga dengan alas ${num1} dan tinggi ${num2}?`;
+            } else if (bentuk === 'lingkaran') {
+                num1 = Math.floor(Math.random() * 10) + 1; // Jari-jari lingkaran
+                hasilSoal = Math.PI * Math.pow(num1, 2); // Luas lingkaran
+                document.getElementById("soal").innerText = `Berapa luas lingkaran dengan jari-jari ${num1}?`;
+            }
+
+            document.getElementById("jawaban").value = ''; // Reset input jawaban
+            document.getElementById("hasil").innerText = ''; // Reset hasil
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkJawaban() {
+            const jawaban = parseFloat(document.getElementById("jawaban").value);
+            if (Math.abs(jawaban - hasilSoal) < 0.0001) {
+                document.getElementById("hasil").innerText = "Jawaban Benar!";
+                document.getElementById("hasil").classList.remove("text-red-500");
+                document.getElementById("hasil").classList.add("text-green-500");
+            } else {
+                document.getElementById("hasil").innerText = "Jawaban Salah!";
+                document.getElementById("hasil").classList.remove("text-green-500");
+                document.getElementById("hasil").classList.add("text-red-500");
+            }
+        }
+    </script>
+</body>
+</html>
